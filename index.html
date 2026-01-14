@@ -188,22 +188,10 @@
   
 
 <!-- BOOTSTRAP MODAL -->
-<div class="modal fade" id="qrScannerModal" tabindex="-1" aria-labelledby="qrScannerModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content rounded-4">
-      <div class="modal-header">
-        <h5 class="modal-title" id="qrScannerModalLabel">Scan QR Code</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="stopScanner()"></button>
-      </div>
-      <div class="modal-body text-center">
-        <div id="reader" style="width:100%; max-width:300px; margin:auto;"></div>
-        <p id="result" class="mt-3 fw-bold"></p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="stopScanner()">Tutup</button>
-      </div>
-    </div>
-  </div>
+<div id="quickScanner" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+    background:white; padding:20px; border-radius:14px; box-shadow:0 0 15px rgba(0,0,0,0.3); z-index:1000;">
+  <div id="reader" style="width:300px; height:300px;"></div>
+  <p id="result" class="mt-2 fw-bold text-center"></p>
 </div>
 
 <!-- Modal Lupa Akun / Password -->
@@ -433,9 +421,8 @@
 
 <!-- SCAN QR BUTTON -->
 <div class="col-6">
-  <button type="button"
-    class="btn btn-light w-100 d-flex align-items-center justify-content-center"
-    data-bs-toggle="modal" data-bs-target="#qrScannerModal">
+  <button type="button" class="btn btn-light w-100 d-flex align-items-center justify-content-center"
+          onclick="quickScanQRCode()">
     <i class="fa-solid fa-qrcode me-2 text-warning"></i>
     Scan QR
   </button>
