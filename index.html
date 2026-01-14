@@ -29,11 +29,6 @@
       box-shadow: 0 6px 15px rgba(0,0,0,0.25);
     }
 
-    /* Badge kecil */
-    .badge {
-      font-size: 0.7rem;
-      padding: 0.4em 0.6em;
-    }
 .icon-wrap{
   width:70px;
   height:70px;
@@ -129,7 +124,14 @@
   overflow-y: auto;
   padding: 0.5rem 1rem;
 }
-
+  .playstore-link{
+    font-size: 0.85rem;
+    color: #000000;
+    transition: color 0.2s ease;
+  }
+  .playstore-link:hover{
+    color: #dc3545; /* merah */
+  }
 
     /* Toast Error Styling */
     #errorToast {
@@ -185,15 +187,6 @@
 </head>
 
 <body class="d-flex justify-content-center align-items-center vh-100">
-  
-
-<!-- BOOTSTRAP MODAL -->
-<div id="quickScanner" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
-    background:white; padding:20px; border-radius:14px; box-shadow:0 0 15px rgba(0,0,0,0.3); z-index:1000;">
-  <div id="reader" style="width:300px; height:300px;"></div>
-  <p id="result" class="mt-2 fw-bold text-center"></p>
-</div>
-
 <!-- Modal Lupa Akun / Password -->
 <div class="modal fade" id="forgotModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog">
@@ -212,7 +205,7 @@
           <input type="text" class="form-control" id="forgotUsername" placeholder="Username / Voucher">
         </div>
         <button type="button" class="btn btn-primary w-100" onclick="submitForgot()" style="border-radius:12px; font-weight:500;">
-          Kirim Instruksi
+          Kirim
         </button>
       </div>
 
@@ -390,8 +383,8 @@
       <div class="position-relative mb-3">
         <i class="bi bi-lock position-absolute top-50 start-0 translate-middle-y ms-3" style="font-size:1.5rem; color:#198754;"></i>
         <input type="password" class="form-control ps-5 pe-5" name="password" placeholder="Password" id="passwordField" maxlength="6" pattern="[A-Za-z0-9]{6}" title="6 huruf/angka">
-        <button type="button" class="btn btn-outline-secondary position-absolute top-50 end-0 translate-middle-y" style="border:none; padding:0 10px;" onclick="togglePassword()">
-          <i class="bi bi-eye" id="eyeIcon" style="color:#6c757d;"></i>
+        <button type="button" class="btn btn-outline-light position-absolute top-50 end-0 translate-middle-y" style="border:none; padding:0 10px;" onclick="togglePassword()">
+          <i class="bi bi-eye" id="eyeIcon" style="color:#000000;"></i>
         </button>
       </div>
 
@@ -401,7 +394,7 @@
   <!-- MASUK -->
   <div class="col-6">
     <button type="submit"
-      class="btn btn-primary w-100 d-flex align-items-center justify-content-center fw-semibold"
+      class="btn btn-warning w-100 d-flex align-items-center justify-content-center fw-semibold"
       style="border-radius:14px;">
       <i class="fa-solid fa-right-to-bracket me-2"></i>
       MASUK
@@ -411,7 +404,7 @@
   <!-- PAKET -->
   <div class="col-6">
     <button type="button"
-      class="btn btn-success w-100 d-flex align-items-center justify-content-center fw-semibold"
+      class="btn btn-success w-100 d-flex align-items-center justify-content-center fw-bold"
       style="border-radius:14px;"
       data-bs-toggle="modal" data-bs-target="#paketModal">
       <i class="fa-solid fa-box me-2"></i>
@@ -419,27 +412,19 @@
     </button>
   </div>
 
-<!-- SCAN QR BUTTON -->
-<div class="col-6">
-  <button type="button" class="btn btn-light w-100 d-flex align-items-center justify-content-center"
-          onclick="quickScanQRCode()">
-    <i class="fa-solid fa-qrcode me-2 text-warning"></i>
-    Scan QR
+<!-- TRIAL -->
+$(if trial == 'yes')
+<div class="col-12">
+  <button type="button"
+    class="btn btn-secondary w-100 d-flex align-items-center justify-content-center fw-semibold"
+    style="border-radius:14px;"
+    onclick="window.location='$(link-login-only)?dst=$(link-orig-esc)&username=T-$(mac-esc)'">
+    <i class="fa-solid fa-bolt me-2 text-danger"></i>
+    TRIAL
   </button>
 </div>
+$(endif)
 
-  <!-- TRIAL -->
-  $(if trial == 'yes')
-  <div class="col-6">
-    <button type="button"
-      class="btn btn-light w-100 d-flex align-items-center justify-content-center"
-      style="border-radius:14px;"
-      onclick="window.location='$(link-login-only)?dst=$(link-orig-esc)&username=T-$(mac-esc)'">
-      <i class="fa-solid fa-bolt me-2 text-danger"></i>
-      TRIAL
-    </button>
-  </div>
-  $(endif)
 
 </div>
 <div class="text-center mb-3">
@@ -460,50 +445,21 @@
      style="font-size:0.85rem; color:#198754;">
     Registrasi Baru
   </a>
+  
+<!-- MyJejakApp Play Store -->
+<a href="https://play.google.com/store/apps/details?id=com.myjejak.app"
+   class="text-decoration-none d-block playstore-link"
+   target="_blank">
+  <i class="fa-brands fa-google-play me-1"></i>
+  download MyJejakApp
+</a>
+
+
 </div>
-
-
-
-
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://unpkg.com/html5-qrcode"></script>
 
 <script>
-let html5QrcodeScannerQuick;
-
-function quickScanQRCode() {
-  const container = document.getElementById('quickScanner');
-  const resultEl = document.getElementById('result');
-  container.style.display = 'block';
-
-  html5QrcodeScannerQuick = new Html5Qrcode("reader");
-
-  Html5Qrcode.getCameras().then(cameras => {
-    if (cameras && cameras.length) {
-      // Cari kamera belakang (environment)
-      let backCamera = cameras.find(cam => /back|rear|environment/gi.test(cam.label)) || cameras[0];
-      const cameraId = backCamera.id;
-
-      html5QrcodeScannerQuick.start(
-        cameraId,
-        { fps: 10, qrbox: { width: 250, height: 250 } },
-        qrCodeMessage => {
-          resultEl.innerText = `QR Code: ${qrCodeMessage}`;
-
-          // Stop scanner setelah dapat hasil & tutup popup
-          html5QrcodeScannerQuick.stop().then(() => {
-            html5QrcodeScannerQuick.clear();
-            container.style.display = 'none';
-            resultEl.innerText = '';
-            document.getElementById('reader').innerHTML = "";
-          });
-        },
-        errorMessage => console.warn(errorMessage)
-      );
-    }
-  }).catch(err => console.error(err));
-}
  const waNumber = "6285157722895"; // ganti dengan nomor WA tujuan
 
 // ===== FUNGSI DETAIL PAKET =====
@@ -619,8 +575,21 @@ function submitRegister() {
   document.getElementById('regPassword').value = '';
   document.getElementById('regName').value = '';
 }
-
-
+// ===== VALIDASI USERNAME =====
+document.login.addEventListener('submit', function(e){
+  const u = this.username.value.trim();
+  const p = this.password.value.trim();
+  if(!u || !p){
+    e.preventDefault();
+    alert('Username dan Password wajib diisi');
+  }
+});
+// ===== CEGAH DOUBLE KLIK LOGIN =====
+document.login.addEventListener('submit', function(){
+  const btn = this.querySelector('button[type="submit"]');
+  btn.disabled = true;
+  btn.innerHTML = 'Memproses...';
+});
 </script>
 
 </body>
