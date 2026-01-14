@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="title"></title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="img/favicon.png">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <style>
+    /* Body & Background */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: url('img/backgroud.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    /* Card Paket Hotspot Hover */
+    .paket-card:hover {
+      transform: translateY(-3px) scale(1.02);
+      transition: all 0.2s ease;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+    }
+
+    /* Badge kecil */
+    .badge {
+      font-size: 0.7rem;
+      padding: 0.4em 0.6em;
+    }
+.icon-wrap{
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:0 auto;
+}
+.icon-wrap i{
+  font-size:2.5rem;
+  color:#fff;
+}
+
+/* Gradient warna */
+.icon-blue{
+  background:linear-gradient(135deg,#0d6efd,#5aa9ff);
+}
+.icon-orange{
+  background:linear-gradient(135deg,#fd7e14,#ffb067);
+}
+.icon-green{
+  background:linear-gradient(135deg,#198754,#4fd18b);
+}
+.icon-purple{
+  background:linear-gradient(135deg,#6f42c1,#a98df0);
+}
+/* Modal Paket Fixed di Tengah */
+#paketModal .modal-dialog {
+  position: fixed;        /* Penting: agar tetap di layar */
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  margin: 0;              /* Hapus margin default */
+  width: 90%;             /* Lebar responsif */
+  max-width: 360px;       /* Lebar maksimum */
+}
+
+#paketModal .modal-content {
+  max-height: 90vh;       /* Agar tidak melebihi tinggi layar */
+  overflow-y: auto;       /* Scroll jika konten tinggi */
+  border-radius: 20px;
+  padding: 1rem;
+}
+#paketModal .modal-body {
+  max-height: 70vh;
+  overflow-y: auto;
+  padding: 0.5rem 1rem;
+}
+/* Modal Lupa Akun / Password Fixed di Tengah */
+#forgotModal .modal-dialog {
+  position: fixed;        /* tetap di layar */
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  margin: 0;              /* hapus margin default */
+  width: 90%;             /* lebar responsif */
+  max-width: 360px;       /* sama dengan modal paket */
+}
+
+#forgotModal .modal-content {
+  max-height: 90vh;       /* tidak melebihi tinggi layar */
+  overflow-y: auto;       /* scroll jika konten tinggi */
+  border-radius: 20px;
+  padding: 1rem;
+}
+
+#forgotModal .modal-body {
+  max-height: 70vh;
+  overflow-y: auto;
+  padding: 0.5rem 1rem;
+}
+/* ===== Modal Registrasi Baru Fixed di Tengah ===== */
+#registerModal .modal-dialog {
+  position: fixed;        /* tetap di layar */
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  margin: 0;              /* hapus margin default */
+  width: 90%;             /* lebar responsif */
+  max-width: 360px;       /* sama dengan modal paket */
+}
+
+#registerModal .modal-content {
+  max-height: 90vh;       /* tidak melebihi tinggi layar */
+  overflow-y: auto;       /* scroll jika konten tinggi */
+  border-radius: 20px;
+  padding: 1rem;
+}
+
+#registerModal .modal-body {
+  max-height: 70vh;
+  overflow-y: auto;
+  padding: 0.5rem 1rem;
+}
+
+
+    /* Toast Error Styling */
+    #errorToast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      min-width: 300px;
+      max-width: 350px;
+      z-index: 1060;
+    }
+
+    @media (max-width: 480px) {
+      #errorToast {
+        min-width: 90%;
+        max-width: 90%;
+      }
+      #errorToast .toast-header {
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      #errorToast .toast-header small {
+        display: block;
+        margin-left: auto;
+        margin-top: 2px;
+      }
+      #errorToast img {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    /* Modal responsive di HP */
+    @media (max-width: 500px) {
+      .modal-dialog {
+        max-width: 90%; 
+        margin: 1.75rem auto; 
+      }
+      .modal-content {
+        padding: 1rem;
+      }
+    }
+
+    /* Hilangkan shadow dan outline pada input */
+    input.form-control,
+    .input-group-text,
+    input.form-control:focus {
+      box-shadow: none !important;
+      outline: none !important;
+    }
+    
+  </style>
+</head>
+
+<body class="d-flex justify-content-center align-items-center vh-100">
+  
+
+<!-- BOOTSTRAP MODAL -->
+<div class="modal fade" id="qrScannerModal" tabindex="-1" aria-labelledby="qrScannerModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4">
+      <div class="modal-header">
+        <h5 class="modal-title" id="qrScannerModalLabel">Scan QR Code</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="stopScanner()"></button>
+      </div>
+      <div class="modal-body text-center">
+        <div id="reader" style="width:100%; max-width:300px; margin:auto;"></div>
+        <p id="result" class="mt-3 fw-bold"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="stopScanner()">Tutup</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Lupa Akun / Password -->
+<div class="modal fade" id="forgotModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content p-3" style="border-radius:20px;">
+
+      <!-- Header -->
+      <div class="modal-header border-0 pb-1 px-3 d-flex align-items-center justify-content-between">
+        <h5 class="modal-title fw-bold flex-grow-1 m-0">Lupa Akun / Password</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Body -->
+      <div class="modal-body" style="max-height:80vh; overflow-y:auto; padding:0.5rem 1rem;">
+        <p class="text-muted small mb-2">Masukkan username atau voucher Anda, kami akan mengirim instruksi pemulihan.</p>
+        <div class="mb-3">
+          <input type="text" class="form-control" id="forgotUsername" placeholder="Username / Voucher">
+        </div>
+        <button type="button" class="btn btn-primary w-100" onclick="submitForgot()" style="border-radius:12px; font-weight:500;">
+          Kirim Instruksi
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- Modal Registrasi Baru -->
+<div class="modal fade" id="registerModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content p-3">
+
+      <!-- Header -->
+      <div class="modal-header border-0 pb-1 px-3 d-flex align-items-center justify-content-between">
+        <h5 class="modal-title fw-bold flex-grow-1 m-0">Registrasi Baru</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Body -->
+      <div class="modal-body" style="max-height:80vh; overflow-y:auto; padding:0.5rem 1rem;">
+        <p class="text-muted small mb-2">Isi data berikut untuk membuat akun baru.</p>
+
+        <!-- Form Registrasi -->
+        <div class="mb-2">
+          <input type="text" class="form-control" id="regUsername" placeholder="Username (6 karakter)" maxlength="6">
+        </div>
+        <div class="mb-2">
+          <input type="password" class="form-control" id="regPassword" placeholder="Password (6 karakter)" maxlength="6">
+        </div>
+        <div class="mb-2">
+          <input type="text" class="form-control" id="regName" placeholder="Nama Lengkap">
+        </div>
+
+        <button type="button" class="btn btn-success w-100" onclick="submitRegister()" style="border-radius:12px; font-weight:500;">
+          Daftar
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Modal Paket Hotspot -->
+<div class="modal fade" id="paketModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+
+    <div class="modal-content p-3" style="border-radius:20px;">
+
+      <!-- Modal Header -->
+      <div class="modal-header border-0 pb-1 px-3 d-flex align-items-center justify-content-between">
+        <button type="button" class="btn btn-link text-decoration-none d-none" id="btnBack">
+          <i class="bi bi-arrow-left-circle" style="font-size:1.3rem;"></i>
+        </button>
+        <h5 class="modal-title fw-bold text-center flex-grow-1 m-0" id="modalTitle">Pilih Paket Hotspot</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="modal-body" style="max-height:80vh; overflow-y:auto;">
+
+        <!-- Grid Paket -->
+ <!-- Grid Paket -->
+<div class="row g-2" id="paketList">
+
+  <!-- Paket 1: 1 JAM -->
+  <div class="col-6">
+    <div class="card paket-card text-center shadow-sm p-2"
+         style="border-radius:12px; cursor:pointer; height:160px; border:none;"
+         onclick="showDetail('1 JAM','2 Ribu | 1 Jam','Unlimited','Paket Singkat','#0d6efd','bi-lightning-fill')">
+
+      <div class="icon-wrap icon-blue">
+        <i class="bi bi-lightning-fill"></i>
+      </div>
+
+      <h6 class="fw-bold mt-2 mb-1">1 JAM</h6>
+      <div class="fw-bold">Rp 2.000</div>
+    </div>
+  </div>
+
+  <!-- Paket 2: HARIAN -->
+  <div class="col-6">
+    <div class="card paket-card text-center shadow-sm p-2"
+         style="border-radius:12px; cursor:pointer; height:160px; border:none;"
+         onclick="showDetail('HARIAN','24 Jam | 1 Hari','Unlimited','Paket Harian','#fd7e14','bi-sun-fill')">
+
+      <div class="icon-wrap icon-orange">
+        <i class="bi bi-sun-fill"></i>
+      </div>
+
+      <h6 class="fw-bold mt-2 mb-1">HARIAN</h6>
+      <div class="fw-bold">Rp 10.000</div>
+    </div>
+  </div>
+
+  <!-- Paket 3: MINGGUAN -->
+  <div class="col-6">
+    <div class="card paket-card text-center shadow-sm p-2"
+         style="border-radius:12px; cursor:pointer; height:160px; border:none;"
+         onclick="showDetail('MINGGUAN','7 Hari | 1 Minggu','Unlimited','Paket Mingguan','#198754','bi-calendar-week-fill')">
+
+      <div class="icon-wrap icon-green">
+        <i class="bi bi-calendar-week-fill"></i>
+      </div>
+
+      <h6 class="fw-bold mt-2 mb-1">MINGGUAN</h6>
+      <div class="fw-bold">Rp 50.000</div>
+    </div>
+  </div>
+
+  <!-- Paket 4: BULANAN -->
+  <div class="col-6">
+    <div class="card paket-card text-center shadow-sm p-2"
+         style="border-radius:12px; cursor:pointer; height:160px; border:none;"
+         onclick="showDetail('BULANAN','30 Hari | 1 Bulan','Unlimited','Paket Bulanan','#6f42c1','bi-moon-fill')">
+
+      <div class="icon-wrap icon-purple">
+        <i class="bi bi-moon-fill"></i>
+      </div>
+
+      <h6 class="fw-bold mt-2 mb-1">BULANAN</h6>
+      <div class="fw-bold">Rp 150.000</div>
+    </div>
+  </div>
+
+</div>
+<!-- Detail Paket -->
+<div id="paketDetail" class="d-none">
+  <div class="shadow-sm p-3 text-center" style="border-radius:15px; border:none;">
+    <i class="bi" id="detailIcon" style="font-size:3.5rem; margin-bottom:10px;"></i>
+    <h5 class="fw-bold mb-2" id="detailNama"></h5>
+    <div class="mb-1"><strong>Masa berlaku:</strong> <span id="detailMasa"></span></div>
+    <div class="mb-1"><strong>Kecepatan:</strong> <span id="detailKecepatan"></span></div>
+    <a id="btnBeliWA" href="#" target="_blank" class="btn btn-success w-100" style="border-radius:12px; font-weight:500;">Beli Paket</a>
+  </div>
+</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <!-- Toast Error -->
+  <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1060;">
+    <div id="errorToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+        <img src="img/favicon.png" class="rounded me-2" alt="Logo" style="width:20px; height:20px; object-fit:cover;">
+        <strong class="me-auto">Login Error</strong>
+        <small>Baru saja</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body" id="errorToastBody">
+        Terjadi kesalahan saat login.
+      </div>
+    </div>
+  </div>
+
+  <!-- Card Login -->
+  <div class="card p-4 shadow" style="max-width:360px; border-radius:20px;">
+    <div class="text-center mb-3">
+      <img src="img/logo.png" class="img-fluid" style="max-width:200px;">
+      <h5 class="mt-2 fw-bold">Selamat Datang</h5>
+      <p class="text-muted mb-3">Masuk untuk mulai internetan</p>
+    </div>
+    <form name="login" action="$(link-login-only)" method="post" class="mb-3" $(if chap-id) onsubmit="return doLogin()" $(endif)>
+      <input type="hidden" name="dst" value="$(link-orig)">
+      <input type="hidden" name="popup" value="true">
+      <!-- Username / Voucher -->
+      <div class="input-group mb-2">
+        <span class="input-group-text bg-white border-end-0">
+          <i class="bi bi-person" style="color:#fd0d0d; font-size:1.5rem;"></i>
+        </span>
+        <input type="text" class="form-control border-start-0" name="username" value="$(username)" placeholder="Username / Voucher" maxlength="6" pattern="[A-Za-z0-9]{6}" title="6 huruf/angka">
+      </div>
+
+      <!-- Password dengan Eye Toggle -->
+      <div class="position-relative mb-3">
+        <i class="bi bi-lock position-absolute top-50 start-0 translate-middle-y ms-3" style="font-size:1.5rem; color:#198754;"></i>
+        <input type="password" class="form-control ps-5 pe-5" name="password" placeholder="Password" id="passwordField" maxlength="6" pattern="[A-Za-z0-9]{6}" title="6 huruf/angka">
+        <button type="button" class="btn btn-outline-secondary position-absolute top-50 end-0 translate-middle-y" style="border:none; padding:0 10px;" onclick="togglePassword()">
+          <i class="bi bi-eye" id="eyeIcon" style="color:#6c757d;"></i>
+        </button>
+      </div>
+
+<!-- Tombol Masuk & Lainnya -->
+<div class="row g-2 mb-3">
+
+  <!-- MASUK -->
+  <div class="col-6">
+    <button type="submit"
+      class="btn btn-primary w-100 d-flex align-items-center justify-content-center fw-semibold"
+      style="border-radius:14px;">
+      <i class="fa-solid fa-right-to-bracket me-2"></i>
+      MASUK
+    </button>
+  </div>
+
+  <!-- PAKET -->
+  <div class="col-6">
+    <button type="button"
+      class="btn btn-success w-100 d-flex align-items-center justify-content-center fw-semibold"
+      style="border-radius:14px;"
+      data-bs-toggle="modal" data-bs-target="#paketModal">
+      <i class="fa-solid fa-box me-2"></i>
+      PAKET
+    </button>
+  </div>
+
+<!-- SCAN QR BUTTON -->
+<div class="col-6">
+  <button type="button"
+    class="btn btn-light w-100 d-flex align-items-center justify-content-center"
+    data-bs-toggle="modal" data-bs-target="#qrScannerModal">
+    <i class="fa-solid fa-qrcode me-2 text-warning"></i>
+    Scan QR
+  </button>
+</div>
+
+  <!-- TRIAL -->
+  $(if trial == 'yes')
+  <div class="col-6">
+    <button type="button"
+      class="btn btn-light w-100 d-flex align-items-center justify-content-center"
+      style="border-radius:14px;"
+      onclick="window.location='$(link-login-only)?dst=$(link-orig-esc)&username=T-$(mac-esc)'">
+      <i class="fa-solid fa-bolt me-2 text-danger"></i>
+      TRIAL
+    </button>
+  </div>
+  $(endif)
+
+</div>
+<div class="text-center mb-3">
+  <!-- Lupa Akun / Password -->
+  <a href="#" 
+     class="text-decoration-none d-block mb-1" 
+     data-bs-toggle="modal" 
+     data-bs-target="#forgotModal" 
+     style="font-size:0.85rem; color:#0d6efd;">
+    Lupa Akun / Password?
+  </a>
+
+  <!-- Registrasi Baru -->
+  <a href="#" 
+     class="text-decoration-none d-block" 
+     data-bs-toggle="modal" 
+     data-bs-target="#registerModal" 
+     style="font-size:0.85rem; color:#198754;">
+    Registrasi Baru
+  </a>
+</div>
+
+
+
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Library html5-qrcode -->
+<script src="https://unpkg.com/html5-qrcode"></script>
+
+<script>
+let html5QrcodeScanner;
+
+const qrModal = document.getElementById('qrScannerModal');
+qrModal.addEventListener('shown.bs.modal', startScanner);
+qrModal.addEventListener('hidden.bs.modal', stopScanner);
+
+function startScanner() {
+  html5QrcodeScanner = new Html5Qrcode("reader");
+  Html5Qrcode.getCameras().then(cameras => {
+    if (cameras && cameras.length) {
+      const cameraId = cameras[0].id;
+      html5QrcodeScanner.start(
+        cameraId,
+        { fps: 10, qrbox: { width: 250, height: 250 } },
+        qrCodeMessage => {
+          document.getElementById('result').innerText = `QR Code: ${qrCodeMessage}`;
+        },
+        errorMessage => {
+          console.warn(errorMessage);
+        }
+      );
+    }
+  }).catch(err => console.error(err));
+}
+
+function stopScanner() {
+  if (html5QrcodeScanner) {
+    html5QrcodeScanner.stop().then(() => {
+      html5QrcodeScanner.clear();
+      document.getElementById('reader').innerHTML = "";
+      document.getElementById('result').innerText = "";
+    }).catch(err => console.error(err));
+  }
+}
+ const waNumber = "6285157722895"; // ganti dengan nomor WA tujuan
+
+// ===== FUNGSI DETAIL PAKET =====
+function showDetail(nama, masa, kecepatan, jenis, color, iconClass){
+  // Tampilkan detail, sembunyikan daftar
+  document.getElementById('paketList').classList.add('d-none');
+  document.getElementById('paketDetail').classList.remove('d-none');
+  document.getElementById('modalTitle').innerText = 'Detail Paket';
+  document.getElementById('btnBack').classList.remove('d-none');
+
+  // Update detail paket
+  document.getElementById('detailNama').innerText = nama;
+  document.getElementById('detailMasa').innerText = masa;
+  document.getElementById('detailKecepatan').innerText = kecepatan;
+
+  // Update ikon
+  const icon = document.getElementById('detailIcon');
+  icon.className = 'bi ' + iconClass;
+  icon.style.color = color;
+
+  // Update link WhatsApp otomatis
+  const pesan = encodeURIComponent(`Halo, saya ingin membeli paket ${nama} (${masa}, ${kecepatan})`);
+  document.getElementById('btnBeliWA').href = `https://wa.me/${waNumber}?text=${pesan}`;
+}
+
+// ===== TOMBOL BACK PAKET MODAL =====
+document.getElementById('btnBack').addEventListener('click', function(){
+  document.getElementById('paketList').classList.remove('d-none');
+  document.getElementById('paketDetail').classList.add('d-none');
+  document.getElementById('modalTitle').innerText = 'Pilih Paket Hotspot';
+  this.classList.add('d-none');
+});
+
+// ===== TOGGLE PASSWORD EYE =====
+function togglePassword() {
+  const pwField = document.getElementById('passwordField');
+  const eye = document.getElementById('eyeIcon');
+  if (pwField.type === 'password') {
+    pwField.type = 'text';
+    eye.classList.replace('bi-eye', 'bi-eye-slash');
+  } else {
+    pwField.type = 'password';
+    eye.classList.replace('bi-eye-slash', 'bi-eye');
+  }
+}
+
+// ===== TOAST ERROR LOGIN =====
+window.addEventListener('load', function() {
+  const errorMessage = "$(error)";
+  if(errorMessage && errorMessage.trim() !== "") {
+    const toastEl = document.getElementById('errorToast');
+    const toastBody = document.getElementById('errorToastBody');
+    toastBody.innerText = errorMessage;
+
+    const toast = new bootstrap.Toast(toastEl, { delay: 3000, autohide: true });
+    toast.show();
+  }
+
+  // Set judul halaman
+  document.getElementById('title').innerHTML = window.location.hostname + " > MASUK DULU";
+});
+
+// ===== FITUR LUPA AKUN / PASSWORD =====
+function submitForgot() {
+  const usernameField = document.getElementById('forgotUsername');
+  const username = usernameField.value.trim();
+  if(!username) {
+    alert('Silakan masukkan username atau voucher.');
+    return;
+  }
+
+  // Buka WA otomatis dengan instruksi pemulihan
+  const waMsg = encodeURIComponent(`Halo, saya lupa akun/password. Username/Voucher saya: ${username}`);
+  const waLink = `https://wa.me/${waNumber}?text=${waMsg}`;
+  window.open(waLink, '_blank');
+
+  // Tutup modal Lupa Akun / Password
+  const forgotModal = bootstrap.Modal.getInstance(document.getElementById('forgotModal'));
+  forgotModal.hide();
+
+  // ===== Hapus teks setelah dikirim =====
+  usernameField.value = '';
+}
+// ===== REGISTRASI AKUN =====
+function submitRegister() {
+  const username = document.getElementById('regUsername').value.trim();
+  const password = document.getElementById('regPassword').value.trim();
+  const name = document.getElementById('regName').value.trim();
+
+  // Validasi sederhana
+  if(!username || !password || !name) {
+    alert('Silakan lengkapi semua kolom.');
+    return;
+  }
+  if(username.length !== 6 || password.length !== 6){
+    alert('Username dan Password harus 6 karakter.');
+    return;
+  }
+
+  // Kirim data ke WA
+  const waMsg = encodeURIComponent(
+    `Halo, saya ingin registrasi akun baru.\nUsername: ${username}\nPassword: ${password}\nNama: ${name}`
+  );
+  const waLink = `https://wa.me/${waNumber}?text=${waMsg}`;
+  window.open(waLink, '_blank');
+
+  // Tutup modal
+  const registerModal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
+  registerModal.hide();
+
+  // Bersihkan input
+  document.getElementById('regUsername').value = '';
+  document.getElementById('regPassword').value = '';
+  document.getElementById('regName').value = '';
+}
+
+
+</script>
+
+</body>
+</html>

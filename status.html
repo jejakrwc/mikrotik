@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="title"></title>
+
+<link rel="icon" href="img/favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+html,body{
+  margin:0;
+  padding:0;
+  min-height:100%;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #eaeaea;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #333;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:url('img/backgroud.jpg') center / cover no-repeat;
+  z-index:-1;
+}
+
+.page-wrap{
+  min-height:50vh;
+  display:flex;
+  justify-content:center;
+  padding:24px 12px;
+}
+
+.status-card{
+  width:100%;
+  max-width:360px;
+  background:#fff;
+  border-radius:20px;
+  padding:20px;
+  box-shadow:0 15px 35px rgba(0,0,0,.15);
+  text-align:center;
+}
+
+/* USER INFO */
+.user-box h3 {
+  font-weight: 500;
+  font-size: 16px;
+  color: #777;
+  margin-bottom:4px;
+}
+.user-box h2 {
+  font-weight: 600;
+  font-size: 22px;
+  color: #0099bb;
+  margin-bottom:16px;
+}
+
+/* ICON TABLE */
+.icon-table {
+  width:100%;
+  margin-bottom:16px;
+  border-collapse: collapse;
+}
+.icon-table td {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:14px;
+  color:#555;
+  padding:6px 0;
+  justify-content:flex-start;
+}
+.icon-table i {
+  font-size:18px;
+  color:#0099bb;
+  width:28px;
+  text-align:center;
+}
+.icon-table .highlight {
+  font-weight:600;
+  color:#0077aa;
+}
+
+/* BUTTON LOGOUT */
+.byu-btn{
+  width:100%;
+  font-family: 'Poppins', sans-serif;
+  padding:12px;
+  border-radius:16px;
+  border:none;
+  background:linear-gradient(135deg,#0099bb,#00c2ff);
+  color:#fff;
+  font-size:15px;
+  font-weight:600;
+  cursor:pointer;
+  transition:.2s;
+}
+.byu-btn:hover{
+  background:#00c2ff;
+  transform:translateY(-2px);
+}
+</style>
+
+</head>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="title"></title>
+
+<link rel="icon" href="img/favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+html,body{
+  margin:0;
+  padding:0;
+  min-height:100%;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #eaeaea;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #333;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:url('img/backgroud.jpg') center / cover no-repeat;
+  z-index:-1;
+}
+
+.page-wrap{
+  min-height:50vh;
+  display:flex;
+  justify-content:center;
+  padding:24px 12px;
+}
+
+.status-card{
+  width:100%;
+  max-width:360px;
+  background:#fff;
+  border-radius:20px;
+  padding:20px;
+  box-shadow:0 15px 35px rgba(0,0,0,.15);
+  text-align:center;
+}
+
+/* USER INFO */
+.user-box h3 {
+  font-weight: 500;
+  font-size: 16px;
+  color: #777;
+  margin-bottom:4px;
+}
+.user-box h2 {
+  font-weight: 600;
+  font-size: 22px;
+  color: #0099bb;
+  margin-bottom:16px;
+}
+
+/* ICON TABLE */
+.icon-table {
+  width:100%;
+  margin-bottom:16px;
+  border-collapse: collapse;
+}
+.icon-table td {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:14px;
+  color:#555;
+  padding:6px 0;
+  justify-content:flex-start;
+}
+.icon-table i {
+  font-size:18px;
+  color:#0099bb;
+  width:28px;
+  text-align:center;
+}
+.icon-table .highlight {
+  font-weight:600;
+  color:#0077aa;
+}
+
+/* BUTTON LOGOUT */
+.byu-btn{
+  width:100%;
+  font-family: 'Poppins', sans-serif;
+  padding:12px;
+  border-radius:16px;
+  border:none;
+  background:linear-gradient(135deg,#0099bb,#00c2ff);
+  color:#fff;
+  font-size:15px;
+  font-weight:600;
+  cursor:pointer;
+  transition:.2s;
+}
+.byu-btn:hover{
+  background:#00c2ff;
+  transform:translateY(-2px);
+}
+</style>
+
+<script>
+function openLogout(){
+  if(window.name!='hotspot_status') return true;
+  window.open(
+    '$(link-logout)',
+    'hotspot_logout',
+    'toolbar=0,location=0,status=0,menubar=0,resizable=1,width=280,height=250'
+  );
+  window.close();
+  return false;
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body class="d-flex justify-content-center align-items-center" style="min-height:100vh; padding:20px 0;">
+
+
+<div class="status-card">
+
+  <div class="user-box">
+    <h3>Selamat Datang</h3>
+    $(if login-by == 'trial')
+    <h2>$(mac)</h2>
+    $(elif login-by != 'mac')
+    <h2 id="user">$(username)</h2>
+    $(else)
+    <h2 id="user">$(mac)</h2>
+    $(endif)
+  </div>
+
+  <form action="$(link-logout)" onsubmit="return openLogout()">
+
+    <table class="icon-table">
+      <tr><td><i class="fa-solid fa-network-wired"></i><span>$(ip)</span></td></tr>
+      <tr><td><i class="fa-solid fa-barcode"></i><span>$(mac)</span></td></tr>
+      <tr><td><i class="fa-solid fa-arrows-rotate"></i><span>$(bytes-in-nice) | $(bytes-out-nice)</span></td></tr>
+      <tr><td><i class="fa-solid fa-clock"></i><span>$(uptime)</span></td></tr>
+      <tr><td><i class="fa-solid fa-database"></i><span>Dipakai Hari Ini: $(bytes-used-today)</span></td></tr>
+      <tr><td><i class="fa-solid fa-calendar-days"></i><span>Dipakai Bulan Ini: $(bytes-used-month)</span></td></tr>
+      <tr><td><i class="fa-solid fa-clock-rotate-left"></i><span>Sesi Terakhir: $(last-session-duration)</span></td></tr>
+      <tr><td><i class="fa-solid fa-user-clock"></i><span>Login Terakhir: $(last-login)</span></td></tr>
+      <tr><td><i class="fa-solid fa-server"></i><span>Gateway: $(gateway)</span></td></tr>
+<tr><td><i class="fa-solid fa-network-wired"></i><span>DNS: $(dns)</span></td></tr>
+<tr><td><i class="fa-solid fa-users"></i><span>Perangkat Aktif: $(active-clients)</span></td></tr>
+
+
+      $(if remain-bytes-total)
+      <tr><td><i class="fa-solid fa-wifi"></i><span class="highlight">Sisa Kuota: $(remain-bytes-total-nice)</span></td></tr>
+      $(endif)
+
+      $(if session-time-left)
+      <tr><td><i class="fa-solid fa-hourglass-half"></i><span class="highlight">Sisa Waktu: $(session-time-left)</span></td></tr>
+      $(endif)
+    </table>
+
+    $(if login-by-mac != 'yes')
+<button type="submit" class="btn btn-danger d-flex align-items-center justify-content-center w-100 mt-3" style="height:45px; border-radius:12px;">
+  <i class="fa-solid fa-right-from-bracket me-2"></i> Logout
+</button>
+    $(endif)
+
+  </form>
+</div>
+
+</body>
+<script>
+function openLogout(){
+  if(window.name!='hotspot_status') return true;
+  window.open(
+    '$(link-logout)',
+    'hotspot_logout',
+    'toolbar=0,location=0,status=0,menubar=0,resizable=1,width=280,height=250'
+  );
+  window.close();
+  return false;
+}
+document.getElementById('title').innerHTML = window.location.hostname + " > STATUS PAKET";
+</script>
+</html>
+
+</html>

@@ -1,0 +1,142 @@
+/* =========================
+   COLOR BRAND RWCJMB
+========================= */
+:root{
+  --rwc-yellow:#FFD000;
+  --rwc-orange:#FF9A00;
+  --rwc-red:#E63946;
+  --rwc-dark:#1c1c1c;
+}
+
+/* =========================
+   BODY & BACKGROUND
+========================= */
+body{
+  font-family:'Poppins',sans-serif;
+  background:
+    linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+    url('img/backgroud.jpg') no-repeat center center fixed;
+  background-size:cover;
+}
+
+/* =========================
+   CARD UMUM
+========================= */
+.card,
+.modal-content{
+  background:rgba(255,255,255,.96);
+  border-radius:22px;
+}
+
+/* =========================
+   PAKET CARD
+========================= */
+.paket-card{
+  background:linear-gradient(180deg,#fff,#fff7e6);
+  transition:all .25s ease;
+}
+
+.paket-card:hover{
+  transform:translateY(-4px) scale(1.03);
+  box-shadow:0 10px 22px rgba(255,154,0,.35);
+}
+
+/* =========================
+   BADGE
+========================= */
+.badge{
+  font-size:.7rem;
+  padding:.4em .6em;
+  background:linear-gradient(135deg,var(--rwc-orange),var(--rwc-red));
+}
+
+/* =========================
+   ICON PAKET
+========================= */
+.icon-wrap{
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:0 auto;
+}
+
+.icon-wrap i{
+  font-size:2.5rem;
+  color:#fff;
+}
+
+/* Gradient ikon – nuansa logo */
+.icon-blue{
+  background:linear-gradient(135deg,var(--rwc-yellow),var(--rwc-orange));
+}
+.icon-orange{
+  background:linear-gradient(135deg,var(--rwc-orange),var(--rwc-red));
+}
+.icon-green{
+  background:linear-gradient(135deg,#22c55e,#16a34a);
+}
+.icon-purple{
+  background:linear-gradient(135deg,#f43f5e,#be123c);
+}
+
+/* =========================
+   TITLE & HEADING
+========================= */
+.modal-title,
+h5.fw-bold{
+  background:linear-gradient(90deg,var(--rwc-yellow),var(--rwc-orange),var(--rwc-red));
+  -webkit-text-fill-color:transparent;
+}
+
+/* =========================
+   INPUT FORM
+========================= */
+input.form-control,
+.input-group-text{
+  box-shadow:none!important;
+  outline:none!important;
+}
+
+input.form-control:focus{
+  border-color:var(--rwc-orange);
+}
+
+/* =========================
+   TOAST ERROR
+========================= */
+#errorToast{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  min-width:300px;
+  max-width:350px;
+  z-index:1060;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width:480px){
+  #errorToast{
+    min-width:90%;
+    max-width:90%;
+  }
+  #errorToast img{
+    width:16px;
+    height:16px;
+  }
+}
+
+@media (max-width:500px){
+  .modal-dialog{
+    max-width:90%;
+    margin:1.75rem auto;
+  }
+  .modal-content{
+    padding:1rem;
+  }
+}
